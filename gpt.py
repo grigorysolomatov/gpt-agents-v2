@@ -61,7 +61,8 @@ def convo(args):
           + 'user'
           + args['sep1']
           + args['sep2']*int(sep_user/len(args['sep2']))
-          + args['sep3'], end='')
+          + args['sep3'])
+    
 def parse_prompt(args):
     lines = args['prompt'].split('\n')
     tokens = [tokenize(line,
