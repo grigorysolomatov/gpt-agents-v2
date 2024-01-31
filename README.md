@@ -1,6 +1,6 @@
 # CLI Tool Documentation
 
-This is a command-line interface (CLI) tool written in Python. It uses the OpenAI API to interact with GPT-3 models. The tool provides a way to have a conversation with the model, list available GPT agents, and perform a test command.
+This is a command-line interface (CLI) tool written in Python. It uses the OpenAI API to interact with GPT models. The tool provides a way to have a conversation with the model, list available GPT agents, and perform a test command.
 
 ## Installation
 
@@ -14,13 +14,13 @@ pip install openai typer python-dotenv toml json re
 
 ### Conversation Command
 
-To start a conversation with a GPT-3 model, use the `convo` command. The command takes several arguments and options:
+To start a conversation with a GPT model, use the `convo` command. The command takes several arguments and options:
 
 ```bash
-python cli_tool.py convo [AGENT] [PROMPT] --agentfile [AGENTFILE] --sep0 [SEP0] --sep1 [SEP1] --sep2 [SEP2] --sep3 [SEP3] --sepl [SEPL]
+python gpt.py convo [AGENT] [PROMPT] --agentfile [AGENTFILE] --sep0 [SEP0] --sep1 [SEP1] --sep2 [SEP2] --sep3 [SEP3] --sepl [SEPL]
 ```
 
-- `AGENT`: The name of the GPT-3 model to use for the conversation.
+- `AGENT`: The name of the GPT model to use for the conversation.
 - `PROMPT`: The initial prompt for the conversation.
 - `--agentfile`: The path to the TOML file containing the agent configurations. Defaults to `agents.toml` in the same directory as the script.
 - `--sep0` to `--sep3`: Custom separators for formatting the conversation output. Defaults to `* `, ` `, `─`, and `*` respectively.
@@ -28,10 +28,10 @@ python cli_tool.py convo [AGENT] [PROMPT] --agentfile [AGENTFILE] --sep0 [SEP0] 
 
 ### Agents Command
 
-To list the available GPT-3 models, use the `agents` command:
+To list the available GPT models, use the `agents` command:
 
 ```bash
-python cli_tool.py agents --agents [AGENTS]
+python gpt.py agents --agents [AGENTS]
 ```
 
 - `--agents`: The path to the TOML file containing the agent configurations. Defaults to `agents.toml` in the same directory as the script.
@@ -41,7 +41,7 @@ python cli_tool.py agents --agents [AGENTS]
 To perform a test command, use the `test` command:
 
 ```bash
-python cli_tool.py test
+python gpt.py test
 ```
 
 ## Environment Variables
