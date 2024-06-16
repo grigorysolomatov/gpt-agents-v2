@@ -54,7 +54,7 @@ def convo(args):
     for chunk in stream:
         if chunk.choices[0].delta.content is not None: # Question: what are choices? chunk.choices[0]
             print(chunk.choices[0].delta.content, end='')
-    
+
     # Print separation line
     print()
     print(args['sep0']
@@ -62,7 +62,19 @@ def convo(args):
           + args['sep1']
           + args['sep2']*int(sep_user/len(args['sep2']))
           + args['sep3'])
-    
+
+@app.command(name="agents", help="List available GPT agents")
+def agents(
+        agents: str  = typer.Option(
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), "agents.toml")
+        ),
+):
+    print(" ".join(agent for agent in toml.load(agents)))
+
+@app.command(name='test')
+def test():
+    print('Test')
+
 def parse_prompt(args):
     lines = args['prompt'].split('\n')
     tokens = [tokenize(line,
@@ -74,54 +86,42 @@ def parse_prompt(args):
     for token in tokens:
         if token['type'] == 'role' and token['value'] not in ['user', 'system']:
             token['value'] = 'assistant'
-    
+
     if tokens[0]['type'] != 'role':
         tokens.insert(0, {
             'type': 'role',
             'value': 'user',
         })
-       
+
     convo = aggregate(tokens)
-    
-    return convo#[{'role': 'user', 'content': args['prompt']}]
+
+    return convo #[{'role': 'user', 'content': args['prompt']}]
 def tokenize(line, sep0='* ', sep1=' ', sep2='-', sep3=' o'):
-    r = lambda s: ''.join(reversed(s))        
+    r = lambda s: ''.join(reversed(s))
     regex = re.escape(r(sep3)) + re.escape(r(sep2)) + '+' + re.escape(r(sep1)) + '(.*?)' + re.escape(r(sep0))
-    
+
     matches = re.search(regex, r(line))
     if not matches: return {
             'type': 'line',
             'value': line,
     }
-    
+
     return {
         'type': 'role',
         'value': r(matches.group(1)),
     }
 def aggregate(tokens):
-    convo =  []    
+    convo =  []
     for token in tokens:
-        if token['type'] == 'role':            
+        if token['type'] == 'role':
             convo.append({
                 'role': token['value'],
                 'content': '',
             })
         elif token['type'] == 'line':
             convo[-1]['content'] += token['value'] + '\n'
-            
+
     return convo
 
-@app.command(name="agents", help="List available GPT agents")
-def agents(
-        agents: str  = typer.Option(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), "agents.toml")
-        ),
-):
-    print(" ".join(agent for agent in sorted(toml.load(agents))))
-
-@app.command(name='test')
-def test():
-    print('Test')
-
 if __name__ == '__main__': app()
-        
+
