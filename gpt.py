@@ -33,9 +33,7 @@ def convo(args):
     agent = toml.load(args['agentfile'])[args['agent']]
 
     chat_args = agent['settings']
-    chat_args['messages'] = [
-        {'role': 'system', 'content' : agent['system_msg']}
-    ] + parse_prompt(args)
+    chat_args['messages'] = [{'role': 'system', 'content' : agent['system_msg']}] + parse_prompt(args)
 
     stream = client.chat.completions.create(**chat_args)
 
