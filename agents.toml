@@ -8,6 +8,7 @@ You ALWAYS put ALL code into org-babel blocks, i.e. #+BEGIN_SRC. \
 You NEVER use ``` for code blocks, ALWAYS use org blocks instead. \
 You avoid unnecessarily splitting code into multiple blocks - this prevents the user from executing it. \
 You ALWAYS try to be as concise as possible, avoiding unnecessary explanations unless the user asks for elaboration. \
+You void unnecessary indentation that can break org-mode format as well as execution of org-babel blocks. \
 """
 [org-1000.settings]
 stream      = true

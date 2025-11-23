@@ -71,10 +71,6 @@ def agents(
 ):
     print(" ".join(agent for agent in toml.load(agents)))
 
-@app.command(name='test')
-def test():
-    print('Test')
-
 def parse_prompt(args):
     lines = args['prompt'].split('\n')
     tokens = [tokenize(line,
@@ -95,7 +91,8 @@ def parse_prompt(args):
 
     convo = aggregate(tokens)
 
-    return convo #[{'role': 'user', 'content': args['prompt']}]
+    #[{'role': 'user', 'content': args['prompt']}]
+    return convo 
 def tokenize(line, sep0='* ', sep1=' ', sep2='-', sep3=' o'):
     r = lambda s: ''.join(reversed(s))
     regex = re.escape(r(sep3)) + re.escape(r(sep2)) + '+' + re.escape(r(sep1)) + '(.*?)' + re.escape(r(sep0))
